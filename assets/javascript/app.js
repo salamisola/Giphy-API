@@ -1,83 +1,58 @@
-const GIPHY_KEY = '7xaTqfKyAQLfNOjpbcs01bByC1meNszb';
-
-function getUserInput(){
+//const GIPHY_KEY = '7xaTqfKyAQLfNOjpbcs01bByC1meNszb';
+$( document ).ready(function() {
+	//array of text to display on the buttons
+	var buttonText = ["Travel","Sport","Architecture","Food","Movies","Fashion","Healthcare","Music","Coffee","Adventure"];	
+	//function to dynamically display interest buttons on the page (removedd the static buttons option index.html)
+	   function displayButtons(){
+        $("#buttonContainer").empty(); 
+        for (var j = 0; j < buttonText.length; j++){
+            var buttons = $("<button>");
+			 buttons.attr({
+			 "class":  'buttons',
+			 "data-name": buttonText[j]
+			 });
+            buttons.text(buttonText[j]);
+            $("#buttonContainer").append(buttons);
+        }
+    }
 	
-	var userSearch = $("#userSearchText").val()
+	function addNewInterest(){
+        $("#addInterest").on("click", function(){
+        var userInput = $("#userSearchText").val();
+		var transformUserInput = userInput.substr(0,1).toUpperCase()+userInput.substr(1);
+       buttonText.push(transformUserInput);    
+        displayButtons();
+        });
+    }
+
 	
-	//javascript, jQuery
-	
-	//requesting gif images from GIPHY API using the key provided at registration
-	var xhr = $.get("http://api.giphy.com/v1/gifs/search?q="+userSearch+"+&api_key=7xaTqfKyAQLfNOjpbcs01bByC1meNszb&limit=10");
-	xhr.done(function(response) { 
+	function userSelection(){
+		
+		//var userSearch = $("#userSearchText").val()
+		var buttonValue = $(this).attr("data-name");
+		//javascript, jQuery
+		
+		//requesting gif images from GIPHY API using the key provided at registration
+		var xhr = $.get("http://api.giphy.com/v1/gifs/search?q="+buttonValue+"+&api_key=7xaTqfKyAQLfNOjpbcs01bByC1meNszb&limit=10");
+		xhr.done(function(response) { 
+			$(".imageContainer").empty();
+			console.log("success got data", response);
+			
+			// access the first item in response object from the API and store the data that the API is returning in a variable called gifimgs
+			var gifimgs = response.data
 
-		console.log("success got data", response);
-		// access the first item in response object from the API and store the data that the API is returning in a variable called gifimgs
-		var gifimgs = response.data
-
-		// loop through the variable and append the returned gifs to <div> in index.html
-		for(var i in gifimgs){
-			$('.imageContainer').append("<img src='"+gifimgs[i].images.original.url+"' style='height:250px;width:250px;' />")
-		}
-	
-
-	});
-	
-	
-}
-
-
-
-
-/*function getData(){	
-	var userSearch = $("#userSearchText").val()	*/
-	//javascript, jQuery
-//var xhr = $.get("http://api.giphy.com/v1/gifs/search?q=ryan+gosling&api_key=YOUR_API_KEY&limit=5");
-//xhr.done(function(data) { console.log("success got data", data); });
-	
-	//javascript, jQuery
-	/*var xhr = $.get("http://api.giphy.com/v1/gifs/search?q="+userSearch+"+&api_key=7xaTqfKyAQLfNOjpbcs01bByC1meNszb&limit=30");
-	xhr.done(function(response) { 		
-		console.log("success got data", response); 
-		var gifimgs = response.data
-		var output="";
-
-		for(var i in gifimgs){
-			var gifO = gifimgs[i];
-			var gifUrl = gifO.images.original.url;
-			console.log(gifUrl);
-			output +=  "<img src='"+gifUrl+"' style='height:350px;width:350px;' />";
-		}
-	$('.container').html(output);
-
-	});
-	
-	
-}*/
-
-
-
-
-
-/* (function(){
-	function giphySearch(keyword){
-	//make a request to giphy API here
+			// loop through the variable and append the returned gifs to <div> in index.html
+			for(var i in gifimgs){
+				 //for (var i=0; i<gifimgs.length; i++){
+				$('.imageContainer').append("<img src='"+gifimgs[i].images.original.url+"' />")
+			}
+		});	
 	}
 	
-	function apendImage(img){
-	
-	}
-	
-	function showLoader(){
-	
-	}
-	
-	function hideLoader(){
-	
-	}
-	
-	(function listenOnFormSubmit(){}) ();
-	
-	function main(){
-	
-	}
-}) (); */
+	displayButtons();
+	addNewInterest();
+	//userSelection();
+	 $(document).on("click", ".buttons", userSelection);
+
+})
+
