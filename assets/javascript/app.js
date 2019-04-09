@@ -15,7 +15,7 @@ $( document ).ready(function() {
             $("#buttonContainer").append(buttons);
         }
     }
-	
+	//function to take the value from the add new topic text field when the add new topic button is clicked
 	function addNewInterest(){
         $("#addInterest").on("click", function(){
         var userInput = $("#userSearchText").val();
@@ -23,7 +23,7 @@ $( document ).ready(function() {
        buttonText.push(transformUserInput);    
         displayButtons();
         });
-    }
+	}
 
 	
 	function userSelection(){
@@ -53,6 +53,6 @@ $( document ).ready(function() {
 	addNewInterest();
 	//userSelection();
 	 $(document).on("click", ".buttons", userSelection);
-
+	 $(document).on("click", ".buttons", userSelection);
 })
 
