@@ -33,7 +33,7 @@ $( document ).ready(function() {
 		//javascript, jQuery
 		
 		//requesting gif images from GIPHY API using the key provided at registration
-		var xhr = $.get("http://api.giphy.com/v1/gifs/search?q="+buttonValue+"+&api_key=7xaTqfKyAQLfNOjpbcs01bByC1meNszb&limit=10");
+		var xhr = $.get("https://api.giphy.com/v1/gifs/search?q="+buttonValue+"+&api_key=7xaTqfKyAQLfNOjpbcs01bByC1meNszb&limit=10");
 		xhr.done(function(response) { 
 			$("#imageContainer").empty();
 			console.log("success got data", response);
